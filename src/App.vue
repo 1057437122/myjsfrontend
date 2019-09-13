@@ -1,16 +1,46 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <el-row>
+      <el-col :span="4">
+        <div class="grid-content bg-purple">
+          <siderbar></siderbar>
+        </div>
+      </el-col>
+      <el-col :span="20">
+        <div class="grid-content bg-purple-light">
+          <router-view />
+        </div>
+      </el-col>
+    </el-row>
   </div>
 </template>
+<script>
+import Siderbar from "@/components/Siderbar";
+
+export default {
+  components: { Siderbar },
+  data() {
+    return {
+      isCollapse: false
+    };
+  },
+  mounted() {
+    //
+  },
+  methods: {
+    handleOpen() {
+      //
+    },
+    handleClose() {
+      //
+    }
+  }
+};
+</script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
