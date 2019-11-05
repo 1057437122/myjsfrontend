@@ -15,7 +15,7 @@ Vue.use(Element, {
   i18n: (key: string, value: string) => i18n.t(key, value)
 })
 Vue.config.productionTip = false
-
+Vue.prototype.$baseUrl = process.env.VUE_APP_BASE_API
 new Vue({
   router,
   i18n,

@@ -60,6 +60,14 @@ export default {
   work_detail_pic_tip: '为了保证图片的安全 请自行加水印',
   file_tip: '为了保证图片的安全 请添加水印',
   file: '文件',
-  add: '新增',
-
+  add: '添加',
+  search_by_description: '根据描述搜索',
+  showInIndex: '在首页显示',
+  contact: '联系我们',
+  message: '留言',
+  contactDesc: '联系我们描述',
+  contactTitle: '联系我们标题',
+  email: 'Email',
+  address: '地址',
+  phone: '电话',
 }

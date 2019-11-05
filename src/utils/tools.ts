@@ -13,7 +13,7 @@ export async function uploadFile(file: BinaryType) {
     }
   })
   if (ret.status === 200) {
-    ret.data.path = ret.data.files[0].path.replace('public/', '')
+    ret.data.path = ret.data.file.path.replace('public/', '')
     ret.data.url = process.env.VUE_APP_BASE_API + ret.data.path
     return ret.data
   } else {
@@ -23,5 +23,13 @@ export async function uploadFile(file: BinaryType) {
       duration: 5 * 1000
     })
     return Promise.reject()
+  }
+}
+export function filterPicture(path: string, type: string) {
+  if (type !== null) {
+    const filePath = path.split(".");
+    return filePath[0] + "-" + type + "." + filePath[1];
+  } else {
+    return path;
   }
 }

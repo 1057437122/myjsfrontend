@@ -1,14 +1,52 @@
 <template>
   <div>
     <el-button @click="handleCreate" class="createBtn">{{ $t('add')}}</el-button>
-    <div class="block" v-for="file in list" :key="file.fileId">
-      <span class="title">{{ file.description}}</span>
-      <el-avatar shape="square" :size="100" fit="fit" :src="file.path"></el-avatar>
-    </div>
+
+    <el-table :data="list" style="width: 100%">
+      <el-table-column prop="description" :label="$t('description')"></el-table-column>
+      <el-table-column>
+        <template slot-scope="scope">
+          <img :src="$baseUrl +  scope.row.path" class="avatar_thumbnail" />
+        </template>
+      </el-table-column>
+      <el-table-column>
+        <template slot-scope="scope">
+          <el-button type="text" @click="handleRemove(scope.row.id)" size="small">{{ $t('remove') }}</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <el-dialog :visible.sync="dialogVisible">
+      <el-input
+        :placeholder="$t('search_by_description')"
+        v-model="fileDescription"
+        @keyup.native.enter="handFilterFile"
+      ></el-input>
+      <el-table :data="fileList" style="width: 100%">
+        <el-table-column prop="size" :label="$t('size')"></el-table-column>
+        <el-table-column prop="description" :label="$t('description')"></el-table-column>
+        <el-table-column>
+          <template slot-scope="scope">
+            <img :src="$baseUrl +  scope.row.path" class="avatar_thumbnail" />
+          </template>
+        </el-table-column>
+        <el-table-column>
+          <template slot-scope="scope">
+            <el-button type="text" @click="handleAddFile(scope.row.id)" size="small">{{ $t('add') }}</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-dialog>
   </div>
 </template>
 <script>
-import { fetchWorkFiles, fetchWorkFilesCount } from "@/api/work";
+import {
+  fetchWorkFiles,
+  fetchWorkFilesCount,
+  createWorkFile,
+  deleteWorkFile,
+  fetchUnappendFile
+} from "@/api/work";
+import { fetchFiles, fetchFileCount } from "@/api/file";
 export default {
   data() {
     return {
@@ -16,13 +54,24 @@ export default {
       list: [],
       total: 0,
       limit: 20,
-      skip: 0
+      skip: 0,
+      fileList: [],
+      fileTotal: 0,
+      dialogVisible: false,
+      fileDescription: ""
     };
   },
   computed: {
     filter() {
       return {
         where: { workId: this.workId },
+        limit: this.limit,
+        skip: this.skip
+      };
+    },
+    fileFilter() {
+      return {
+        where: { description: { like: "%" + this.fileDescription + "%" } },
         limit: this.limit,
         skip: this.skip
       };
@@ -33,16 +82,50 @@ export default {
   },
   methods: {
     fetchList() {
-      fetchWorkFilesCount({ where: this.filter.where }).then(res => {
-        this.total = res.count;
+      fetchWorkFiles(this.workId, { filter: this.filter }).then(res => {
+        this.total = res.total;
+        this.list = res.data;
       });
-      fetchWorkFiles({ filter: this.filter }).then(res => {
-        this.list = res;
+    },
+    handFilterFile() {
+      this.fetchFiles();
+    },
+    fetchFiles() {
+      fetchUnappendFile(this.workId).then(res => {
+        this.fileList = res.data;
+        this.fileTotal = res.total;
       });
     },
     handleCreate() {
-      //
+      this.dialogVisible = true;
+      this.fileDescription = "";
+      this.fetchFiles();
+    },
+    handleAddFile(id) {
+      createWorkFile({ workId: this.workId, fileId: id }).then(res => {
+        this.$message({
+          type: "success",
+          message: this.$t("success")
+        });
+        this.fetchList();
+        this.fetchFiles();
+      });
+    },
+    handleRemove(id) {
+      deleteWorkFile(this.workId, id).then(res => {
+        this.fetchList();
+        this.$message({
+          type: "success",
+          message: this.$t("success")
+        });
+      });
     }
   }
 };
 </script>
+<style scoped>
+.avatar_thumbnail {
+  width: 50px;
+  height: 50px;
+}
+</style>

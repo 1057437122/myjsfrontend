@@ -10,7 +10,7 @@
       <el-table-column prop="subtitle" :label="$t('subtitle')"></el-table-column>
       <el-table-column>
         <template slot-scope="scope">
-          <img :src="baseUrl +  scope.row.cover" class="avatar_thumbnail" />
+          <img :src="$baseUrl +  scope.row.cover" class="avatar_thumbnail" />
         </template>
       </el-table-column>
       <el-table-column>
@@ -26,6 +26,9 @@
         <el-form-item prop="title" :label="$t('title')">
           <el-input v-model="form.title" />
         </el-form-item>
+        <el-form-item prop="showInIndex">
+          <el-checkbox v-model="form.showInIndex">{{$t('showInIndex')}}</el-checkbox>
+        </el-form-item>
         <el-form-item prop="subtitle" :label="$t('subtitle')">
           <el-input v-model="form.subtitle" />
         </el-form-item>
@@ -37,7 +40,7 @@
             :show-file-list="false"
             :http-request="handleFile"
           >
-            <img v-if="form.cover" :src="baseUrl +form.cover" class="avatar" />
+            <img v-if="form.cover" :src="$baseUrl +form.cover" class="avatar" />
             <i v-else class="el-icon-plus avatar-uploader-icon" />
             <div slot="tip" class="el-upload__tip">{{ $t('file_tip')}}</div>
           </el-upload>
@@ -68,10 +71,9 @@ export default {
       list: [],
       total: 0,
       file: "",
-      baseUrl: process.env.VUE_APP_BASE_API,
       isUpdate: false,
-      form: { title: "", subtitle: "", cover: "" },
-      emptyForm: { title: "", subtitle: "" },
+      form: { title: "", subtitle: "", cover: "", showInIndex: false },
+      emptyForm: { title: "", subtitle: "", cover: "", showInIndex: false },
       dialogVisible: false,
       rules: {
         title: [

@@ -24,10 +24,15 @@
         <span slot="title">{{ $t('artwork')}}</span>
       </el-menu-item>
     </router-link>
-
+    <router-link to="/contact">
+      <el-menu-item>
+        <i class="el-icon-setting"></i>
+        <span slot="title">{{ $t('contact') }}</span>
+      </el-menu-item>
+    </router-link>
     <el-menu-item>
-      <i class="el-icon-setting"></i>
-      <span slot="title">导航四</span>
+      <i class="el-icon-message"></i>
+      <span slot="title">{{ $t('message') }}</span>
     </el-menu-item>
   </el-menu>
 </template>

@@ -45,5 +45,10 @@ export default new Router({
       name: 'artdetail',
       component: () => import('./views/WorkFile.vue')
     },
+    {
+      path: '/contact',
+      name: 'contact',
+      component: () => import('./views/Contact.vue')
+    },
   ]
 })

@@ -33,18 +33,32 @@ export function deleteWork(workId: string) {
     method: 'delete'
   })
 }
-
-export function fetchWorkFilesCount(data: object) {
+export function fetchWorkFiles(id: string, data: object) {
   return request({
-    url: 'work-files/count',
+    url: 'work/' + id + '/files',
     method: 'get',
     params: data
   })
 }
-export function fetchWorkFiles(data: object) {
+
+export function createWorkFile(data: object) {
   return request({
     url: 'work-files',
+    method: 'post',
+    data
+  })
+}
+
+export function fetchUnappendFile(id: string) {
+  return request({
+    url: 'work/' + id + '/unappendfiles',
     method: 'get',
-    params: data
+  })
+}
+
+export function deleteWorkFile(id: string, fileId: string) {
+  return request({
+    url: 'work/' + id + '/files/' + fileId,
+    method: 'delete',
   })
 }

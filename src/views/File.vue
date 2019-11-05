@@ -6,7 +6,7 @@
       <el-table-column prop="description" :label="$t('description')"></el-table-column>
       <el-table-column>
         <template slot-scope="scope">
-          <img :src="baseUrl +  scope.row.path" class="avatar_thumbnail" />
+          <img :src="$baseUrl +  filterPicture( scope.row.path,'mid')" class="avatar_thumbnail" />
         </template>
       </el-table-column>
       <el-table-column>
@@ -32,7 +32,7 @@
             :show-file-list="false"
             :http-request="handleFile"
           >
-            <img v-if="form.path" :src="baseUrl +form.path" class="avatar" />
+            <img v-if="form.path" :src="$baseUrl +form.path" class="avatar" />
             <i v-else class="el-icon-plus avatar-uploader-icon" />
             <div slot="tip" class="el-upload__tip">{{ $t('file_tip')}}</div>
           </el-upload>
@@ -53,7 +53,7 @@ import {
   updateFile,
   deleteFile
 } from "@/api/file";
-import { uploadFile } from "@/utils/tools";
+import { uploadFile, filterPicture } from "@/utils/tools";
 export default {
   data() {
     return {
@@ -66,8 +66,7 @@ export default {
       emptyForm: { size: "", description: "", path: "" },
       dialogVisible: false,
       rules: {},
-      file: "",
-      baseUrl: process.env.VUE_APP_BASE_API
+      file: ""
     };
   },
   mounted() {
@@ -100,6 +99,10 @@ export default {
         this.list = res;
       });
     },
+    filterPicture(filePath,fileType){
+      return filterPicture(filePath,fileType);
+    },
+
     handleCreate() {
       this.isUpdate = false;
       this.form = { ...this.emptyForm };
