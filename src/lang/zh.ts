@@ -20,7 +20,7 @@ export default {
   aboutus: '关于我们',
   zh: '中文',
   en: '英文',
-  name: '姓名',
+  name: '名称',
   title: '标题',
   description: '简介',
   subtitle1: '子标题1',
@@ -70,4 +70,22 @@ export default {
   email: 'Email',
   address: '地址',
   phone: '电话',
+  service: '服务设置',
+  service1title: '第1项服务标题',
+  service1description: '第1项服务简介',
+  service1picture: '第1项服务缩略图',
+
+  service2title: '第2项服务标题',
+  service2description: '第2项服务简介',
+  service2picture: '第2项服务缩略图',
+
+  service3title: '第3项服务标题',
+  service3description: '第3项服务简介',
+  service3picture: '第3项服务缩略图',
+
+  service4title: '第4项服务标题',
+  service4description: '第4项服务简介',
+  service4picture: '第4项服务缩略图',
+  pictures: '多张图片',
+
 }

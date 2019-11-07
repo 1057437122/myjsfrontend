@@ -17,6 +17,14 @@ service.interceptors.request.use(
     config.headers['Content-Type'] = 'application/json; charset=utf-8'
     config.headers['authorization'] = 'Bearer ' + store.getters.token
     config.transformRequest = (data) => {
+      if (data !== null && typeof (data) === 'object') {
+        Object.keys(data).forEach(item => {
+          if (data[item] === null) {
+            delete data[item]
+          }
+        })
+      }
+
       return JSON.stringify(data)
     }
     return config

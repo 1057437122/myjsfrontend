@@ -24,6 +24,12 @@
         <span slot="title">{{ $t('artwork')}}</span>
       </el-menu-item>
     </router-link>
+    <router-link to="/service">
+      <el-menu-item>
+        <i class="el-icon-aim"></i>
+        <span slot="title">{{ $t('service') }}</span>
+      </el-menu-item>
+    </router-link>
     <router-link to="/contact">
       <el-menu-item>
         <i class="el-icon-setting"></i>
