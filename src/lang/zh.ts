@@ -87,5 +87,6 @@ export default {
   service4description: '第4项服务简介',
   service4picture: '第4项服务缩略图',
   pictures: '多张图片',
+  setPicture: '设置图片'
 
 }

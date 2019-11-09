@@ -15,7 +15,11 @@
       </el-table-column>
       <el-table-column>
         <template slot-scope="scope">
-          <el-button @click="handleDetail(scope.row.id)" type="text" size="small">{{ $t('detail') }}</el-button>
+          <el-button
+            @click="handleDetail(scope.row.id)"
+            type="text"
+            size="small"
+          >{{ $t('setPicture') }}</el-button>
           <el-button type="text" @click="handleEdit(scope.row)" size="small">{{ $t('edit') }}</el-button>
           <el-button type="text" @click="handleRemove(scope.row.id)" size="small">{{ $t('remove') }}</el-button>
         </template>
