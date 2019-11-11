@@ -20,17 +20,25 @@ const store = new Vuex.Store({
     }
   },
   actions: {
-    login({ commit }, data) {
+    async login({ commit }, data) {
       const { username, password } = data
-      return new Promise((resolve, reject) => {
-        login({ name: username, password: password }).then(res => {
-          commit('SET_TOKEN', res.token)
-          setToken(res.token)
-          resolve()
-        }).catch(error => {
-          reject(error)
-        })
-      })
+      const res: any = await login({ name: username, password: password })
+      if (res) {
+        commit('SET_TOKEN', res.token)
+        setToken(res.token)
+        return
+      } else {
+        return
+      }
+      // return new Promise((resolve, reject) => {
+      //   login({ name: username, password: password }).then(res => {
+      //     commit('SET_TOKEN', res.token)
+      //     setToken(res.token)
+      //     resolve()
+      //   }).catch(error => {
+      //     reject(error)
+      //   })
+      // })
     },
     resetToken({ commit }) {
       return new Promise(resolve => {
