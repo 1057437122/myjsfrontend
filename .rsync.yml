@@ -37,5 +37,3 @@ steps:
     target: /data/tmp/webadmin
     include: []
     exclude: [.git,.vscode]
-    script:
-      - "[ -d /data/tmp/api/public ] && sudo chmod -R 777 /data/tmp/api/public"
