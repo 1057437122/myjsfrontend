@@ -115,7 +115,11 @@ export default {
     },
     fetchFiles() {
       fetchUnappendFile(this.workId, { filter: this.fileFilter }).then(res => {
-        this.fileList = res.data;
+        this.fileList = res.data.map(item => {
+          const pathArr = item.path.split(".");
+          item.path = pathArr[0] + "-mid." + pathArr[1];
+          return item;
+        });
         this.fileTotal = res.total;
       });
     },
