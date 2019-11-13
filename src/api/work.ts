@@ -49,10 +49,11 @@ export function createWorkFile(data: object) {
   })
 }
 
-export function fetchUnappendFile(id: string) {
+export function fetchUnappendFile(id: string, data: object) {
   return request({
     url: 'work/' + id + '/unappendfiles',
     method: 'get',
+    params: data
   })
 }
 

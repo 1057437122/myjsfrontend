@@ -25,6 +25,13 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination
+      :current-page.sync="currentPage"
+      :page-size.sync="limit"
+      hide-on-single-page
+      :total="total"
+      @current-change="handleCurrentChange"
+    />
     <el-dialog :visible.sync="dialogVisible">
       <el-form :rules="rules" ref="form" :model="form">
         <el-form-item prop="title" :label="$t('title')">
@@ -70,8 +77,9 @@ export default {
   data() {
     return {
       lang: "zh",
-      limit: 10,
+      limit: 20,
       skip: 0,
+      currentPage: 0,
       list: [],
       total: 0,
       file: "",
@@ -102,6 +110,10 @@ export default {
     }
   },
   methods: {
+    handleCurrentChange() {
+      this.skip = (this.currentPage - 1) * this.limit;
+      this.fetchList();
+    },
     // upload
     handleChange(file, fileList) {
       this.file = file.raw;

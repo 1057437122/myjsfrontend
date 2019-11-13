@@ -15,6 +15,13 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination
+      :current-page.sync="currentPage"
+      :page-size.sync="limit"
+      hide-on-single-page
+      :total="total"
+      @current-change="handleCurrentChange"
+    />
     <el-dialog :visible.sync="dialogVisible">
       <el-input
         :placeholder="$t('search_by_description')"
@@ -35,6 +42,13 @@
           </template>
         </el-table-column>
       </el-table>
+      <el-pagination
+        :current-page.sync="filePage"
+        :page-size.sync="limit"
+        hide-on-single-page
+        :total="fileTotal"
+        @current-change="handleFileCurrentChange"
+      />
     </el-dialog>
   </div>
 </template>
@@ -54,6 +68,8 @@ export default {
       list: [],
       total: 0,
       limit: 20,
+      currentPage: 0,
+      filePage: 0,
       skip: 0,
       fileList: [],
       fileTotal: 0,
@@ -64,7 +80,6 @@ export default {
   computed: {
     filter() {
       return {
-        where: { workId: this.workId },
         limit: this.limit,
         skip: this.skip
       };
@@ -81,6 +96,14 @@ export default {
     this.fetchList();
   },
   methods: {
+    handleCurrentChange() {
+      this.skip = (this.currentPage - 1) * this.limit;
+      this.fetchList();
+    },
+    handleFileCurrentChange() {
+      this.skip = (this.filePage - 1) * this.limit;
+      this.fetchFiles();
+    },
     fetchList() {
       fetchWorkFiles(this.workId, { filter: this.filter }).then(res => {
         this.total = res.total;
@@ -91,7 +114,7 @@ export default {
       this.fetchFiles();
     },
     fetchFiles() {
-      fetchUnappendFile(this.workId).then(res => {
+      fetchUnappendFile(this.workId, { filter: this.fileFilter }).then(res => {
         this.fileList = res.data;
         this.fileTotal = res.total;
       });

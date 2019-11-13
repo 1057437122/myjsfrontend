@@ -63,12 +63,6 @@
       <el-form-item :label="$t('collapse3description')" prop="collapse3description">
         <el-input v-model="form.collapse3description"></el-input>
       </el-form-item>
-      <el-form-item :label="$t('bottomtitle')" prop="bottomtitle">
-        <el-input v-model="form.bottomtitle"></el-input>
-      </el-form-item>
-      <el-form-item :label="$t('bottomdescription')" prop="bottomdescription">
-        <el-input v-model="form.bottomdescription"></el-input>
-      </el-form-item>
     </el-form>
     <div slot="footer">
       <el-button @click="reset()">{{ $t('reset') }}</el-button>
@@ -182,20 +176,6 @@ export default {
           {
             required: true,
             message: this.$t("collapse3description") + this.$t("notEmpty"),
-            trigger: "blur"
-          }
-        ],
-        bottomtitle: [
-          {
-            required: true,
-            message: this.$t("bottomtitle") + this.$t("notEmpty"),
-            trigger: "blur"
-          }
-        ],
-        bottomdescription: [
-          {
-            required: true,
-            message: this.$t("bottomdescription") + this.$t("notEmpty"),
             trigger: "blur"
           }
         ]

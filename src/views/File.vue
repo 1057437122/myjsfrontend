@@ -16,6 +16,13 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination
+      :current-page.sync="currentPage"
+      :page-size.sync="limit"
+      hide-on-single-page
+      :total="total"
+      @current-change="handleCurrentChange"
+    />
     <el-dialog :visible.sync="dialogVisible">
       <el-form :rules="rules" ref="form" :model="form">
         <el-form-item prop="size" :label="$t('size')">
@@ -57,9 +64,10 @@ import { uploadFile, filterPicture } from "@/utils/tools";
 export default {
   data() {
     return {
-      limit: 10,
+      limit: 20,
       skip: 0,
       list: [],
+      currentPage: 0,
       total: 0,
       isUpdate: false,
       form: {},
@@ -77,7 +85,8 @@ export default {
       return {
         where: {},
         limit: this.limit,
-        skip: this.skip
+        skip: this.skip,
+        order: "createTime DESC"
       };
     }
   },
@@ -91,6 +100,10 @@ export default {
         this.form.path = res.path;
       });
     },
+    handleCurrentChange() {
+      this.skip = (this.currentPage - 1) * this.limit;
+      this.fetchList();
+    },
     fetchList() {
       fetchFileCount({ where: this.filter.where }).then(res => {
         this.total = res.count;
@@ -99,8 +112,8 @@ export default {
         this.list = res;
       });
     },
-    filterPicture(filePath,fileType){
-      return filterPicture(filePath,fileType);
+    filterPicture(filePath, fileType) {
+      return filterPicture(filePath, fileType);
     },
 
     handleCreate() {
