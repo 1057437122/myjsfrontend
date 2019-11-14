@@ -67,7 +67,7 @@ export default {
       workId: this.$route.params.id,
       list: [],
       total: 0,
-      limit: 20,
+      limit: 10,
       currentPage: 0,
       filePage: 0,
       skip: 0,
@@ -107,7 +107,11 @@ export default {
     fetchList() {
       fetchWorkFiles(this.workId, { filter: this.filter }).then(res => {
         this.total = res.total;
-        this.list = res.data;
+        this.list = res.data.map(item => {
+          const pathArr = item.path.split(".");
+          item.path = pathArr[0] + "-mid." + pathArr[1];
+          return item;
+        });
       });
     },
     handFilterFile() {

@@ -64,7 +64,7 @@ import { uploadFile, filterPicture } from "@/utils/tools";
 export default {
   data() {
     return {
-      limit: 20,
+      limit: 10,
       skip: 0,
       list: [],
       currentPage: 0,

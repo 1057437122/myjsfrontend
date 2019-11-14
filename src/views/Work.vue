@@ -77,7 +77,7 @@ export default {
   data() {
     return {
       lang: "zh",
-      limit: 20,
+      limit: 10,
       skip: 0,
       currentPage: 0,
       list: [],
